@@ -23,9 +23,15 @@ let listBooksTitle = (books_arr) => books_arr.map(book => ({ title: book.title }
 
 // Est-ce que tous les livres ont été empruntés au moins une fois ?
 
-let atLeastOneTime = books_arr => books_arr.some(book => book['rented'] === 0) ? "Au moins un livre n'a pas été emprunté" : "Tous les livres ont été empruntés au moins une fois"
+let atLeastOneTime = books_arr => books_arr.some(book => book.rented === 0) ? "Au moins un livre n'a pas été emprunté" : "Tous les livres ont été empruntés au moins une fois"
 
-// console.log(atLeastOneTime(books))
+// let atLeastOneTime = books_arr => {
+//   if (books_arr.filter(book => book.rented === 0).length > 0)
+//     return "Au moins un livre n'a pas été emprunté"
+//   else return "Tous les livres ont été empruntés au moins une fois"
+// }
+
+console.log(atLeastOneTime(books))
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 

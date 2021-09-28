@@ -1,0 +1,30 @@
+
+body {
+  font-family: sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+label {
+  min-width: 6rem;
+  display: inline-block;
+}
+
+form {
+  margin: 1rem;
+  padding: 2rem;
+  border: 2px red solid;
+  width: max-content;
+}
+
+form > div {
+  margin-bottom: 1rem;
+}
+
+input[type=submit] {
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+}

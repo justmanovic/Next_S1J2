@@ -2,63 +2,62 @@ let sendBtn = document.querySelector("#send")
 let inputFirstName = document.querySelector("#firstName")
 let inputLastName = document.querySelector("#lastName")
 let inputEmail = document.querySelector("#email")
-
-
-
+let inputlotoNumbers = document.querySelector("#lotoNumbers")
 let errors = document.querySelector("#errors")
+let tirage = tirageLoto();
 
-let tirageLoto = () => {
-  let arr = []
-  for (i = 0; i < 6; i++) {
-    let num = Math.floor(Math.random() * 50)
-    if (!arr.includes(num))
-      arr.push(num)
-  }
-  return arr
-}
-
-let tirage = tirageLoto()
 console.log(tirage)
 
+function tirageLoto() {
+  const ranNum = () => Math.floor(Math.random() * 50) + 1;
+  let current;
+  let arr = [];
 
-sendBtn.addEventListener("click", checkLoto)
+  while (arr.length < 6) {
+    if (arr.indexOf(current = ranNum()) === -1) {
+      arr.push(current);
+    }
+  }
+  return arr;
+};
 
+function checkEmpty(element, msg) {
+  if (element === "") {
+    let blockError = document.createElement('p')
+    blockError.innerText = msg
+    errors.append(blockError)
+  }
+}
 
-
-function checkLoto(e, firstname, lastname, email) {
+function checkLoto(e) {
   e.preventDefault()
-  let inputlotoNumbers = document.querySelector("#lotoNumbers")
   let inputlotoNumbersValues = inputlotoNumbers.value.split(",")
   let newValues = inputlotoNumbersValues.map(value => parseInt(value))
-  if (inputFirstName.value === '') {
-    let firstNameError = document.createElement('p')
-    firstNameError.innerText = 'Veuillez entrer un prénom'
-    errors.append(firstNameError)
-  }
-  if (inputLastName.value === '') {
-    let lastNameError = document.createElement('p')
-    lastNameError.innerText = 'Veuillez entrer un nom de famille'
-    errors.append(lastNameError)
-  }
-  if (inputEmail.value === '') {
-    let emailMissingError = document.createElement('p')
-    emailMissingError.innerText = 'Veuillez entrer un email'
-    errors.append(emailMissingError)
-  }
-  if (!validateEmail(inputEmail.value)) {
-    let emailValidateError = document.createElement('p')
-    emailValidateError.innerText = 'Veuillez entrer un email valide !'
+
+  checkEmpty(inputFirstName.value, 'Veuillez entrer un prénom')
+  checkEmpty(inputLastName.value, 'Veuillez entrer un nom de famille')
+  checkEmpty(inputEmail.value, 'Veuillez entrer un email')
+  checkEmpty(inputlotoNumbers.value, 'Veuillez entrer vos numéros')
+
+  if (inputEmail.value && !validateEmail(inputEmail.value)) {
+    let blockError = document.createElement('p')
+    blockError.innerText = 'Veuillez entrer un email valide !'
     errors.append(emailValidateError)
   }
-  if (compareLotoNumbers(tirage, newValues)) {
-    let winMessage = document.createElement('p')
-    winMessage.innerText = 'Bravo le millionnaire'
-    errors.append(winMessage)
-  }
-  else {
-    let loseMessage = document.createElement('p')
-    loseMessage.innerText = 'DSL you lose !!!'
-    errors.append(loseMessage)
+
+  if (inputlotoNumbers.value) {
+
+    if (compareLotoNumbers(tirage, newValues)) {
+      let winMessage = document.createElement('p')
+      winMessage.innerText = 'CHAMPION'
+      errors.append(winMessage)
+    }
+
+    else {
+      let loseMessage = document.createElement('p')
+      loseMessage.innerText = 'tu restes à la rue!!'
+      errors.append(loseMessage)
+    }
   }
 }
 
@@ -75,11 +74,13 @@ let compareLotoNumbers = (tirage, grille) => {
   return win
 }
 
-
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+
+
+sendBtn.addEventListener("click", checkLoto)
 
 
 // Votre email n'est pas valide (lorsque l'email fourni n'est pas au bon format)

@@ -29,15 +29,18 @@ function checkEmpty(element, msg) {
   }
 }
 
-function checkLoto(e) {
-  e.preventDefault()
-  let inputlotoNumbersValues = inputlotoNumbers.value.split(",")
-  let newValues = inputlotoNumbersValues.map(value => parseInt(value))
-
+function checkForm() {
   checkEmpty(inputFirstName.value, 'Veuillez entrer un prénom')
   checkEmpty(inputLastName.value, 'Veuillez entrer un nom de famille')
   checkEmpty(inputEmail.value, 'Veuillez entrer un email')
   checkEmpty(inputlotoNumbers.value, 'Veuillez entrer vos numéros')
+}
+
+function checkLoto(e) {
+  e.preventDefault()
+  let inputlotoNumbersValues = inputlotoNumbers.value.split(",")
+  let newValues = inputlotoNumbersValues.map(value => parseInt(value))
+  checkForm()
 
   if (inputEmail.value && !validateEmail(inputEmail.value)) {
     let blockError = document.createElement('p')
@@ -61,16 +64,11 @@ function checkLoto(e) {
   }
 }
 
-let compareLotoNumbers = (tirage, grille) => {
-  let bonResultat = 0
+function compareLotoNumbers(tirage, grille) {
   let win = false
-  grille.forEach(num => {
-    if (tirage.includes(num)) {
-      bonResultat += 1
-    }
-  })
-  if (bonResultat === tirage.length)
-    win = true
+  let bonResultat = 0
+  grille.forEach(num => tirage.includes(num) ? bonResultat += 1 : '')
+  bonResultat === tirage.length ? win = true : ''
   return win
 }
 
@@ -79,10 +77,4 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-
 sendBtn.addEventListener("click", checkLoto)
-
-
-// Votre email n'est pas valide (lorsque l'email fourni n'est pas au bon format)
-// Désolé, vous avez perdu, les nombres gagnants sont : x1, x2, x3, x4, x5, x6(à remplacer par les 6 chiffres tirés aléatoirement).
-//   Félicitations, vous avez gagné 1 million!!!!!

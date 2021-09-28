@@ -29,11 +29,20 @@ function checkEmpty(element, msg) {
   }
 }
 
+function checkValidEmail(element, msg) {
+  if (element && !validateEmail(element)) {
+    let blockError = document.createElement('p')
+    blockError.innerText = msg
+    errors.append(blockError)
+  }
+}
+
 function checkForm() {
   checkEmpty(inputFirstName.value, 'Veuillez entrer un prénom')
   checkEmpty(inputLastName.value, 'Veuillez entrer un nom de famille')
   checkEmpty(inputEmail.value, 'Veuillez entrer un email')
   checkEmpty(inputlotoNumbers.value, 'Veuillez entrer vos numéros')
+  checkValidEmail(inputEmail.value, "L'email entré n'est pas valide !")
 }
 
 function checkLoto(e) {
@@ -41,12 +50,6 @@ function checkLoto(e) {
   let inputlotoNumbersValues = inputlotoNumbers.value.split(",")
   let newValues = inputlotoNumbersValues.map(value => parseInt(value))
   checkForm()
-
-  if (inputEmail.value && !validateEmail(inputEmail.value)) {
-    let blockError = document.createElement('p')
-    blockError.innerText = 'Veuillez entrer un email valide !'
-    errors.append(emailValidateError)
-  }
 
   if (inputlotoNumbers.value) {
 

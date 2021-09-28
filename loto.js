@@ -38,10 +38,10 @@ function checkValidEmail(element, msg) {
 }
 
 function checkForm() {
-  checkEmpty(inputFirstName.value, 'Veuillez entrer un prénom')
-  checkEmpty(inputLastName.value, 'Veuillez entrer un nom de famille')
-  checkEmpty(inputEmail.value, 'Veuillez entrer un email')
-  checkEmpty(inputlotoNumbers.value, 'Veuillez entrer vos numéros')
+  checkEmpty(inputFirstName.value, "Veuillez entrer un prénom")
+  checkEmpty(inputLastName.value, "Veuillez entrer un nom de famille")
+  checkEmpty(inputEmail.value, "Veuillez entrer un email")
+  checkEmpty(inputlotoNumbers.value, "Veuillez entrer vos numéros")
   checkValidEmail(inputEmail.value, "L'email entré n'est pas valide !")
 }
 
@@ -61,7 +61,7 @@ function checkLoto(e) {
 
     else {
       let loseMessage = document.createElement('p')
-      loseMessage.innerText = 'tu restes à la rue!!'
+      loseMessage.innerText = 'Tu restes à la rue !'
       errors.append(loseMessage)
     }
   }
